@@ -12,7 +12,7 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     CRUD::resource('estate', 'EstateCrudController');
-    CRUD::resource('estate_type', 'EstateTypeCrudController');
+    CRUD::resource('estate_type', 'Estate_typeCrudController');
     CRUD::resource('location', 'LocationCrudController');
     CRUD::resource('client', 'AbonentCrudController');
     CRUD::resource('announcement', 'AnnouncementCrudController');
