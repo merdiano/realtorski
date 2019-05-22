@@ -19,7 +19,7 @@ class Estate extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['approved','client_id','images','view','title','description',
+    protected $fillable = ['approved','abonent_id','images','view','title','description',
         'locationP','locationC','estate_type','room','phone','announcement_type'];
     // protected $hidden = [];
     // protected $dates = [];
@@ -37,18 +37,18 @@ class Estate extends Model
     */
 
     public function client(){
-        return $this->belongsTo(Abonent::class);
+        return $this->belongsTo(Abonent::class,'abonent_id');
     }
-    public function locationP(){
-        return $this->hasOne(Location::class,'locationP');
-    }
-
-    public function locationC(){
-        return $this->hasOne(Location::class,'locationC');
+    public function location(){
+        return $this->belongsTo(Location::class,'locationP');
     }
 
-    public function estate_type(){
-        return $this->belongsTo(Estate_type::class);
+    public function location_child(){
+        return $this->belongsTo(Location::class,'locationC');
+    }
+
+    public function type(){
+        return $this->belongsTo(Estate_type::class,'estate_type');
     }
     /*
     |--------------------------------------------------------------------------

@@ -22,13 +22,13 @@ class AnnouncementController extends Controller
         if($subCategory)
             $query = $query->where('categoryC',$subCategory);
         if($locationP)
-            $query = $query->where('locationP',$subCategory);
+            $query = $query->where('locationP',$locationP);
         if($locationC)
-            $query = $query->where('locationC',$subCategory);
+            $query = $query->where('locationC',$locationC);
 
         return $query->select(['title','images','price','locationC','categoryC','created_at'])
 //            ->select()
-            ->orderBy('updated_at','DESC')
+            ->orderBy('created_at','DESC')
             ->paginate(10);
     }
 
