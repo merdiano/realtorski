@@ -23,4 +23,5 @@ Route::get('/location/{id?}', 'LocationController@index');
 Route::get('/category/{id?}', 'CategoryController@index');
 
 // /api/announcement/<main category id>/?subcategory=<3>&locationP=<location id>&locatinC
-Route::get('/announcement/{mainCategory}', 'AnnouncementController@index');
+Route::get('/announcement/list', 'AnnouncementController@list');
+Route::get('/announcement/item/{id}', 'AnnouncementController@item');

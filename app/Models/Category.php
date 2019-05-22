@@ -28,7 +28,25 @@ class Category extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
+    public static function getTree()
+    {
+        $category = self::orderBy('lft')->get();
+        if ($category->count()) {
+            foreach ($category as $k => $category_item) {
+                $category_item->children = collect([]);
+                foreach ($category as $i => $category_subitem) {
+                    if ($category_subitem->parent_id == $category_item->id) {
+                        $category_item->children->push($category_subitem);
+                        // remove the subitem for the first level
+                        $category = $category->reject(function ($item) use ($category_subitem) {
+                            return $item->id == $category_subitem->id;
+                        });
+                    }
+                }
+            }
+        }
+        return $category;
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -38,6 +56,9 @@ class Category extends Model
         return $this->hasMany(Announcement::class);
     }
 
+    public function children(){
+        return $this->hasMany(Category::class,'parent_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

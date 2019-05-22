@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class EstateController extends Controller
 {
-    //
+    public function list(){
+
+    }
 }

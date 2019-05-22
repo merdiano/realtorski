@@ -19,7 +19,7 @@ class Announcement extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['title','description','client_id','images','price',
+    protected $fillable = ['title','description','abonent_id','images','price',
         'locationP','locationC','phone','categoryP','categoryC','approved'];
     // protected $hidden = [];
     // protected $dates = [];
@@ -37,21 +37,21 @@ class Announcement extends Model
     */
 
     public function client(){
-        return $this->belongsTo(Abonent::class);
+        return $this->belongsTo(Abonent::class,'abonent_id');
     }
-    public function locationP(){
-        return $this->hasOne(Location::class,'locationP');
-    }
-
-    public function locationC(){
-        return $this->hasOne(Location::class,'locationC');
+    public function location(){
+        return $this->belongsTo(Location::class,'locationP');
     }
 
-    public function categoryP(){
+    public function location_child(){
+        return $this->belongsTo(Location::class,'locationC');
+    }
+
+    public function category(){
         return $this->belongsTo(Category::class,'categoryP');
     }
 
-    public function categoryC(){
+    public function category2(){
         return $this->belongsTo(Category::class,'categoryC');
     }
     /*

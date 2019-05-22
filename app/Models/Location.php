@@ -34,22 +34,9 @@ class Location extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    //parent location
-    public function locationP(){
-        return $this->hasOne(Location::class,'locationP');
-    }
-    //child location
-    public function locationC(){
-        return $this->hasOne(Location::class,'locationC');
-    }
 
-    //parent category
-    public function categoryP(){
-        return $this->hasOne(Category::class,'categoryP');
-    }
-    //child category
-    public function categoryC(){
-        return $this->hasOne(Category::class,'categoryC');
+    public function children(){
+        return $this->hasMany(Location::class,'parent_id');
     }
     /*
     |--------------------------------------------------------------------------

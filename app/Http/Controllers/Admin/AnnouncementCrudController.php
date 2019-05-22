@@ -34,8 +34,51 @@ class AnnouncementCrudController extends CrudController
         */
 
         // TODO: remove setFromDb() and manually define Fields and Columns
-        $this->crud->setFromDb();
+//        $this->crud->setFromDb();
+        //['title','description','client_id','images','price',
+        //        'locationP','locationC','phone','categoryP','categoryC','approved'];
 
+        $this->crud->addColumns([
+            ['name'=>'title','type'=>'text','label'=>'Title'],
+            ['name'=>'description','type'=>'text','label'=>'Description'],
+            ['name'=>'phone','label'=>'Phone','type' => 'number'],
+            ['name'=>'approved','type'=>'boolean'],
+            ['name'=>'images','type'=>'upload_multiple','label'=>'Images'],
+            ['name'=>'created_at','type'=>'date_time','label'=>'Date'],
+            ['label' => "Abonent", 'type' => "select", 'name' => 'abonent_id', 'entity' => 'client',
+                'attribute' => "email", 'model' => "App\Models\Abonent"],
+            ['label'=>'Category P.', 'type'=>'select', 'name'=>'categoryP', 'entity'=>'category',
+                'model'=>'App\Models\Category','attribute' => 'name_tm', 'searchLogic' => false],
+            ['name'=>'categoryC','type'=>'select','label'=>'Category C.', 'entity'=>'category2',
+                'model'=>'App\Models\Category', 'attribute' => 'name_tm','searchLogic' => false],
+            ['name'=>'locationP','type'=>'select','label'=>'Location P.', 'entity'=>'location',
+                'model'=>'App\Models\Location','attribute' => 'name_tm', 'searchLogic' => false],
+            ['name'=>'locationC','type'=>'select','label'=>'Location C.', 'entity'=>'location_child',
+                'model'=>'App\Models\Location','attribute' => 'name_tm', 'searchLogic' => false]
+        ]);
+        $this->crud->addFields([
+            ['name'=>'title','type'=>'text','label'=>'Title'],
+            ['name'=>'description','type'=>'text','label'=>'Description'],
+            ['name'=>'phone','label'=>'Phone','type' => 'number'],
+            ['name'=>'approved','type'=>'checkbox','label'=>'Approve'],
+//            ['name'=>'images','type'=>'upload_multiple','label'=>'Images'],
+            ['label' => "Abonent", 'type' => "select",'name' => 'abonent_id', 'entity' => 'client', 'attribute' => "email", 'model' => "App\Models\Abonent"],
+            ['name'=>'categoryP','attribute'=>'name_tm','type'=>'select','label'=>'Category P.',
+                'entity'=>'categoryP', 'model'=>'App\Models\Category',
+                'options'=>(function ($query) {
+                    return $query->orderBy('name_tm', 'ASC')->where('depth', 1)->get();
+                }),
+            ],
+            ['name'=>'categoryC','attribute'=>'name_tm','type'=>'select2_nested','label'=>'Category C.', 'entity'=>'categoryC', 'model'=>'App\Models\Category'],
+            ['name'=>'locationP','attribute'=>'name_tm','type'=>'select','label'=>'Location P.',
+                'entity'=>'locationP', 'model'=>'App\Models\Location',
+                'options'=>(function ($query) {
+                    return $query->orderBy('name_tm', 'ASC')->where('depth', 1)->get();
+                })
+            ],
+
+            ['name'=>'locationC','attribute'=>'name_tm','type'=>'select2_nested','label'=>'Location C.', 'entity'=>'locationC', 'model'=>'App\Models\Location']
+        ]);
         // add asterisk for fields that are required in AnnouncementRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
