@@ -21,8 +21,8 @@ class UserController extends Controller
         }
         //dd(\auth('api'));
         //return response()->json(['success' => \auth()->guard('api')], 200);
-        if(\auth()->attempt(['email' => request('email'), 'password' => request('password')])){
-            $user = Auth::user();
+        if(auth()->attempt(['email' => request('email'), 'password' => request('password')])){
+            $user = auth()->user();
             $success['user'] =  $user;
             $success['token'] =  $user->createToken('riyeltorski')->accessToken;
             return response()->json(['success' => $success], 200);
@@ -55,7 +55,7 @@ class UserController extends Controller
 
     public function userDetails()
     {
-        $users = User::get();
+//        $users = User::get();
         return response()->json(['success' => \auth()->user()], 200);
     }
 }
