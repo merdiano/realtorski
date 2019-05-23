@@ -15,7 +15,7 @@ class AnnouncementRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return auth()->check();
     }
 
     /**
@@ -26,7 +26,10 @@ class AnnouncementRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'title' => 'required|min:5|max:255',
+            'locationP' => 'required',
+            'categoryP' => 'required',
+            'categoryC' => 'required',
         ];
     }
 

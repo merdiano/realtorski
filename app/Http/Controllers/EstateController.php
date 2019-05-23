@@ -37,4 +37,16 @@ class EstateController extends Controller
     public function item($id){
         return Estate::find($id);
     }
+
+    public function store(){
+
+    }
+
+    public function delete($id){
+        $estate = Estate::find($id);
+        if($estate && $estate->abonent_id == auth()->id()){
+            $estate->delete();
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ class Announcement extends Model
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['title','description','abonent_id','images','price',
-        'locationP','locationC','phone','categoryP','categoryC','approved'];
+        'locationP','locationC','phone','email','show_phone','show_mail','categoryP','categoryC','approved'];
     // protected $hidden = [];
     // protected $dates = [];
 

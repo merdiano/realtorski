@@ -19,7 +19,7 @@ class Vehicle extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = [];
+    protected $fillable = ['mark','model','year','motor','probeg','kredit','obmen','price','karopka','description','locationP','locationC','phone','images','abonent_id','approved'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -35,7 +35,7 @@ class Vehicle extends Model
     |--------------------------------------------------------------------------
     */
     public function client(){
-        return $this->belongsTo(Abonent::class);
+        return $this->belongsTo(Abonent::class,'abonent_id');
     }
 
     public function locationP(){

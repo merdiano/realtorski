@@ -61,7 +61,10 @@ class AnnouncementController extends Controller
 
     }
 
-    public function delete(){
-
+    public function delete($id){
+        $announce = Announcement::find($id);
+        if($announce && $announce->abonent_id == auth()->id()){
+            $announce->delete();
+        }
     }
 }
