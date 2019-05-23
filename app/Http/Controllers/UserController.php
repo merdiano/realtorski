@@ -23,9 +23,7 @@ class UserController extends Controller
         //return response()->json(['success' => \auth()->guard('api')], 200);
         if(\auth()->attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
-            $success['name'] =  $user->name;
-            $success['email'] =  $user->email;
-            $success['phone'] =  $user->phone;
+            $success['user'] =  $user;
             $success['token'] =  $user->createToken('riyeltorski')->accessToken;
             return response()->json(['success' => $success], 200);
         }
