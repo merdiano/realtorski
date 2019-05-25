@@ -50,7 +50,7 @@ class AnnouncementCrudController extends CrudController
                 'attribute' => "email", 'model' => "App\Models\Abonent"],
             ['label'=>'Category P.', 'type'=>'select', 'name'=>'categoryP', 'entity'=>'category',
                 'model'=>'App\Models\Category','attribute' => 'name_tm', 'searchLogic' => false],
-            ['name'=>'categoryC','type'=>'select','label'=>'Category C.', 'entity'=>'category2',
+            ['name'=>'categoryC','type'=>'select','label'=>'Category C.', 'entity'=>'subCategory',
                 'model'=>'App\Models\Category', 'attribute' => 'name_tm','searchLogic' => false],
             ['name'=>'locationP','type'=>'select','label'=>'Location P.', 'entity'=>'location',
                 'model'=>'App\Models\Location','attribute' => 'name_tm', 'searchLogic' => false],
