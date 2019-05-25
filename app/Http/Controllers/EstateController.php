@@ -20,7 +20,7 @@ class EstateController extends Controller
 
         $query = Estate::with('location:id,name_tm,name_ru')
             ->with('type:id,name_tm,name_ru')
-            ->select(['images','title','locationP','estate_type','announcement_type']);
+            ->select(['id','images','title','locationP','estate_type','announcement_type']);
 
         foreach ($filters as $key=>$filter){
             $query->where($key,$filter);

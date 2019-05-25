@@ -15,7 +15,7 @@ class VehicleController extends Controller
         $price_end = \request('price_end');
 
         $query = Vehicle::with(['location:id,name_tm,name_ru','mark:id,name','model:id,name'])
-            ->select(['title','images','price','locationP','categoryC','created_at'])
+            ->select(['id','title','images','price','locationP','categoryC','created_at'])
             ->where('approved',1);
 
         foreach ($filters as $key=>$filter){

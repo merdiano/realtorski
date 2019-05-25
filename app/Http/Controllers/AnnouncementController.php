@@ -13,7 +13,7 @@ class AnnouncementController extends Controller
         $filters = \request()->only(['categoryP','categoryC','locationP']);
         $query = Announcement::with('location:id,name_tm,name_ru')
             ->with('subCategory:id,name_tm,name_ru')
-            ->select(['title','images','price','locationP','categoryC','created_at'])
+            ->select(['id','title','images','price','locationP','categoryC','created_at'])
             ->where('approved',1);
 
         foreach ($filters as $key => $filter){
@@ -35,6 +35,7 @@ class AnnouncementController extends Controller
 
         try{
             Announcement::create([
+
                 'title' => $request['title'],
                 'description' => $request['description'],
                 'abonent_id' => auth()->id(),
