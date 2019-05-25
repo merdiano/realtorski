@@ -15,7 +15,7 @@ class EstateRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return auth()->check();
+        return true;
     }
 
     /**
