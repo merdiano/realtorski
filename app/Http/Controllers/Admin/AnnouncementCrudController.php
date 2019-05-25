@@ -73,7 +73,7 @@ class AnnouncementCrudController extends CrudController
             ],
             ['name'=>'categoryC','attribute'=>'name_tm','type'=>'select2_nested','label'=>'Category C.', 'entity'=>'subCategory', 'model'=>'App\Models\Category'],
             ['name'=>'locationP','attribute'=>'name_tm','type'=>'select','label'=>'Location P.',
-                'entity'=>'locationP', 'model'=>'App\Models\Location',
+                'entity'=>'location', 'model'=>'App\Models\Location',
                 'options'=>(function ($query) {
                     return $query->orderBy('name_tm', 'ASC')->where('depth', 1)->get();
                 })
