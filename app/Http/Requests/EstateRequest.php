@@ -15,7 +15,7 @@ class EstateRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return auth()->check();
     }
 
     /**
@@ -27,6 +27,11 @@ class EstateRequest extends FormRequest
     {
         return [
             // 'name' => 'required|min:5|max:255'
+            'title' => 'required|min:3|max:255',
+            'locationP' => 'required',
+            'locationC' => 'required',
+            'estate_type' => 'required',
+            'announcement_type' => 'required'
         ];
     }
 

@@ -58,4 +58,17 @@ class UserController extends Controller
 //        $users = User::get();
         return response()->json(['success' => \auth()->user()], 200);
     }
+
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @return [string] message
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
 }

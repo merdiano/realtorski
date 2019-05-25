@@ -15,7 +15,7 @@ class VehicleRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return auth()->check();
     }
 
     /**
@@ -26,7 +26,16 @@ class VehicleRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'mark' =>'required',
+            'model'=>'required',
+            'locationP'=>'required',
+            'locationC'=>'required',
+            'year'=>'required',
+            'motor'=>'required',
+            'probeg'=>'required',
+            'kredit'=>'required',
+            'obmen'=>'required',
+            'karopka'=>'required'
         ];
     }
 

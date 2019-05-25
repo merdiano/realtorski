@@ -2,45 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
     public function list(){
-        $mark = \request('mark');
-        $model = \request('model');
-        $year_start = \request('year_start');
-        $year_end = \request('year_end');
-        $credit  =\request('credit');
-        $exchange = \request('exchange');
+        $filters = \request()->only(['mark','model','locationP','locationC','year','motor','probeg','kredit','obmen','karopka']);
         $price_start = \request('price_start');
         $price_end = \request('price_end');
-        $locationP = request('locationP');
-        $locationC = request('locationC');
 
-        $query = Vehicle::with('location_child:id,name_tm,name_ru')
+        $query = Vehicle::with(['locationC:id,name_tm,name_ru','mark:id,name','model:id,name'])
+            ->select(['title','images','price','locationC','categoryC','created_at'])
             ->where('approved',1);
-//        todo sorting???
-        if($subCategory)
-            $query = $query->where('categoryC',$subCategory);
-        if($locationP)
-            $query = $query->where('locationP',$locationP);
-        if($locationC)
-            $query = $query->where('locationC',$locationC);
 
-        return $query->select(['title','images','price','locationC','categoryC','created_at'])
-//            ->select()
-            ->orderBy('created_at','DESC')
+        foreach ($filters as $key=>$filter){
+            $query->where($key,$filter);
+        }
+
+        if($price_start)
+            $query->where('price','>=',$price_start);
+
+        if($price_end)
+            $query->where('price','<=',$price_end);
+
+//        todo sorting???
+        return $query->orderBy('created_at','DESC')
             ->paginate(10);
     }
 
-    public function store(){
-
+    public function store(VehicleRequest $request){
+        try{
+            //todo add vehicle type sedan, depik ...
+            Vehicle::create([
+                'mark' =>$request['mark'],
+                'model'=>$request['model'],
+                'locationP'=>$request['locationP'],
+                'locationC'=>$request['locationC'],
+                'year'=>$request['year'],
+                'motor'=>$request['motor'],
+                'probeg'=>$request['probeg'],
+                'kredit'=>$request['kredit'],
+                'obmen'=>$request['obmen'],
+                'karopka'=>$request['karopka'],
+                'phone' => auth()->user()->phone,
+//                'email' => auth()->user()->email,
+            ]);
+            return response()->json(['message' => 'Successfully saved']);
+        }catch (\Exception $ex){
+            return response()->json(['error' => 'Failed']);
+        }
     }
 
     public function item($id){
-
+        return Vehicle::with(['locationC:name_tm,name_ru','model:name','mark:name'])->find($id);
     }
 
     public function delete($id){

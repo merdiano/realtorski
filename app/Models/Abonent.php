@@ -22,9 +22,9 @@ class Abonent extends Authenticatable
     protected $table = 'abonents';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    // protected $guarded = ['id'];
+    protected $guarded = ['id'];
     protected $fillable = ['name','avatar','phone', 'email', 'password',];
-    protected $hidden = ['password'];
+    protected $hidden = ['password','id'];
     // protected $dates = [];
 
     /*

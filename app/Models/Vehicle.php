@@ -39,11 +39,11 @@ class Vehicle extends Model
     }
 
     public function locationP(){
-        return $this->hasOne(Location::class,'locationP');
+        return $this->belongsTo(Location::class,'locationP');
     }
 
     public function locationC(){
-        return $this->hasOne(Location::class,'locationC');
+        return $this->belongsTo(Location::class,'locationC');
     }
 
     public function mark(){

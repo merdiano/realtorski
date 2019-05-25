@@ -10,54 +10,48 @@ use Illuminate\Support\Facades\DB;
 class AnnouncementController extends Controller
 {
     public function list(){
-        $mainCategory = request('category');
+        $filters = \request()->only(['categoryP','categoryC','locationP','locationC']);
         $query = Announcement::with('location_child:id,name_tm,name_ru')
             ->with('category2:id,name_tm,name_ru')
-            ->where('categoryP',$mainCategory)
+            ->select(['title','images','price','locationC','categoryC','created_at'])
             ->where('approved',1);
-        $subCategory = request('subcategory');
-        $locationP = request('locationP');
-        $locationC = request('locationC');
-//        todo sorting???
-        if($subCategory)
-            $query = $query->where('categoryC',$subCategory);
-        if($locationP)
-            $query = $query->where('locationP',$locationP);
-        if($locationC)
-            $query = $query->where('locationC',$locationC);
 
-        return $query->select(['title','images','price','locationC','categoryC','created_at'])
-//            ->select()
-            ->orderBy('created_at','DESC')
+        foreach ($filters as $key=>$filter){
+            $query->where($key,$filter);
+        }
+        //        todo sorting???
+        return $query->orderBy('created_at','DESC')
             ->paginate(10);
     }
 
     public function item($id){
-        $announcement = Announcement::findOrFail($id);
-        return $announcement;
+        return Announcement::with(['location_child:id,name_tm,name_ru','category2:id,name_tm,name_ru'])
+            ->find($id);
     }
 
     public function store(AnnouncementRequest $request){
 
-        $announcement = Announcement::create([
-            'title' => $request['title'],
-            'description' => $request['description'],
-            'client_id' => auth()->id(),
-            'price' => $request['price'],
-            'locationP' => $request['locationP'],
-            'locationC' => $request['locationC'],
-            'phone' => auth()->user()->phone,
-            'categoryP' => $request['categoryP'],
-            'categoryC' => $request['categoryC']
-        ]);
+        try{
+            Announcement::create([
+                'title' => $request['title'],
+                'description' => $request['description'],
+                'client_id' => auth()->id(),
+                'price' => $request['price'],
+                'locationP' => $request['locationP'],
+                'locationC' => $request['locationC'],
+                'phone' => auth()->user()->phone,
+                'email' => auth()->user()->email,
+                'categoryP' => $request['categoryP'],
+                'categoryC' => $request['categoryC']
+            ]);
+            return response()->json(['message' => 'Successfully saved']);
+        }catch (\Exception $ex){
+            return response()->json(['error' => 'Failed']);
+        }
 
-        if($announcement)
-            return true;
-        else
-            return false;
     }
 
-    public function update(Request $request){
+    public function update(AnnouncementRequest $request){
 
     }
 
