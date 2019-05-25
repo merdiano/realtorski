@@ -55,6 +55,7 @@ class EstateController extends Controller
                 'estate_type' => $request['estate_type'],
                 'room' => $request['room'],
                 'phone' => auth()->user()->phone,
+                'abonent_id' => auth()->id(),
 //                'email' => auth()->user()->email,
                 'announcement_type' => $request['announcement_type']
             ]);

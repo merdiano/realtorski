@@ -37,7 +37,7 @@ class AnnouncementController extends Controller
             Announcement::create([
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'client_id' => auth()->id(),
+                'abonent_id' => auth()->id(),
                 'price' => $request['price'],
                 'locationP' => $request['locationP'],
 //                'locationC' => $request['locationC'],
