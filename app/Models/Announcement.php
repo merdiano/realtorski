@@ -19,8 +19,21 @@ class Announcement extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['title','description','abonent_id','images','price',
-        'locationP','locationC','phone','email','show_phone','show_mail','categoryP','categoryC','approved'];
+    protected $fillable = [
+        'title',
+        'description',
+        'abonent_id',
+        'images',
+        'price',
+        'locationP',//'locationC',
+        'phone',
+        'email',
+        'show_phone',
+        'show_mail',
+        'categoryP',
+        'categoryC',
+        'approved'
+    ];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -43,15 +56,15 @@ class Announcement extends Model
         return $this->belongsTo(Location::class,'locationP');
     }
 
-    public function location_child(){
-        return $this->belongsTo(Location::class,'locationC');
-    }
+//    public function location_child(){
+//        return $this->belongsTo(Location::class,'locationC');
+//    }
 
     public function category(){
         return $this->belongsTo(Category::class,'categoryP');
     }
 
-    public function category2(){
+    public function subCategory(){
         return $this->belongsTo(Category::class,'categoryC');
     }
     /*

@@ -9,12 +9,13 @@ use Illuminate\Http\Request;
 class VehicleController extends Controller
 {
     public function list(){
-        $filters = \request()->only(['mark','model','locationP','locationC','year','motor','probeg','kredit','obmen','karopka']);
+        $filters = \request()->only(['mark','model','locationP',//'locationC',
+            'year','motor','probeg','kredit','obmen','karopka']);
         $price_start = \request('price_start');
         $price_end = \request('price_end');
 
-        $query = Vehicle::with(['locationC:id,name_tm,name_ru','mark:id,name','model:id,name'])
-            ->select(['title','images','price','locationC','categoryC','created_at'])
+        $query = Vehicle::with(['location:id,name_tm,name_ru','mark:id,name','model:id,name'])
+            ->select(['title','images','price','locationP','categoryC','created_at'])
             ->where('approved',1);
 
         foreach ($filters as $key=>$filter){
@@ -39,7 +40,7 @@ class VehicleController extends Controller
                 'mark' =>$request['mark'],
                 'model'=>$request['model'],
                 'locationP'=>$request['locationP'],
-                'locationC'=>$request['locationC'],
+//                'locationC'=>$request['locationC'],
                 'year'=>$request['year'],
                 'motor'=>$request['motor'],
                 'probeg'=>$request['probeg'],
@@ -56,7 +57,7 @@ class VehicleController extends Controller
     }
 
     public function item($id){
-        return Vehicle::with(['locationC:name_tm,name_ru','model:name','mark:name'])->find($id);
+        return Vehicle::with(['location:name_tm,name_ru','model:name','mark:name'])->find($id);
     }
 
     public function delete($id){

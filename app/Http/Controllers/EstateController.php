@@ -10,13 +10,17 @@ class EstateController extends Controller
 {
     public function list(){
 
-        $filters = \request()->only(['estate_type','announcement_type','locationP','locationC']);
+        $filters = \request()->only([
+            'estate_type',
+            'announcement_type',
+            'locationP',//'locationC'
+        ]);
 
         $room = \request('room');
 
-        $query = Estate::with('location_child:id,name_tm,name_ru')
+        $query = Estate::with('location:id,name_tm,name_ru')
             ->with('type:id,name_tm,name_ru')
-            ->select(['images','title','locationC','estate_type','announcement_type']);
+            ->select(['images','title','locationP','estate_type','announcement_type']);
 
         foreach ($filters as $key=>$filter){
             $query->where($key,$filter);
@@ -36,7 +40,7 @@ class EstateController extends Controller
     }
 
     public function item($id){
-        return Estate::with(['location_child:id,name_tm,name_ru','type:id,name_ru,name_tm'])
+        return Estate::with(['location:id,name_tm,name_ru','type:id,name_ru,name_tm'])
             ->find($id);
     }
 
@@ -47,7 +51,7 @@ class EstateController extends Controller
                 'title' => $request['title'],
                 'description' => $request['description'],
                 'locationP' => $request['locationP'],
-                'locationC' => $request['locationC'],
+//                'locationC' => $request['locationC'],
                 'estate_type' => $request['estate_type'],
                 'room' => $request['room'],
                 'phone' => auth()->user()->phone,

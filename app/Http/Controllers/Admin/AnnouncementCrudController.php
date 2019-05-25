@@ -54,8 +54,7 @@ class AnnouncementCrudController extends CrudController
                 'model'=>'App\Models\Category', 'attribute' => 'name_tm','searchLogic' => false],
             ['name'=>'locationP','type'=>'select','label'=>'Location P.', 'entity'=>'location',
                 'model'=>'App\Models\Location','attribute' => 'name_tm', 'searchLogic' => false],
-            ['name'=>'locationC','type'=>'select','label'=>'Location C.', 'entity'=>'location_child',
-                'model'=>'App\Models\Location','attribute' => 'name_tm', 'searchLogic' => false]
+
         ]);
         $this->crud->addFields([
             ['name'=>'title','type'=>'text','label'=>'Title'],
@@ -80,7 +79,7 @@ class AnnouncementCrudController extends CrudController
                 })
             ],
 
-            ['name'=>'locationC','attribute'=>'name_tm','type'=>'select2_nested','label'=>'Location C.', 'entity'=>'locationC', 'model'=>'App\Models\Location']
+//            ['name'=>'locationC','attribute'=>'name_tm','type'=>'select2_nested','label'=>'Location C.', 'entity'=>'locationC', 'model'=>'App\Models\Location']
         ]);
         // add asterisk for fields that are required in AnnouncementRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

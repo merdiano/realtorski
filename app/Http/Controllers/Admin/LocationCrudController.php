@@ -44,7 +44,7 @@ class LocationCrudController extends CrudController
             ['name'=>'name_ru','type'=>'text','label'=>'Name Ru'],
         ]);
         $this->crud->allowAccess('reorder');
-        $this->crud->enableReorder('name_tm', 2);
+        $this->crud->enableReorder('name_tm', 1);
         // add asterisk for fields that are required in LocationRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

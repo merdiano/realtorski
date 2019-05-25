@@ -19,7 +19,8 @@ class Vehicle extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['mark','model','year','motor','probeg','kredit','obmen','price','karopka','description','locationP','locationC','phone','images','abonent_id','approved'];
+    protected $fillable = ['mark','model','year','motor','probeg','kredit','obmen','price','karopka','description','locationP',//'locationC',
+        'phone','images','abonent_id','approved'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -38,13 +39,13 @@ class Vehicle extends Model
         return $this->belongsTo(Abonent::class,'abonent_id');
     }
 
-    public function locationP(){
+    public function location(){
         return $this->belongsTo(Location::class,'locationP');
     }
 
-    public function locationC(){
-        return $this->belongsTo(Location::class,'locationC');
-    }
+//    public function locationC(){
+//        return $this->belongsTo(Location::class,'locationC');
+//    }
 
     public function mark(){
         return $this->belongsTo(Mark::class,'mark');

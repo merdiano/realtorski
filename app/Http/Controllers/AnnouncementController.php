@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 class AnnouncementController extends Controller
 {
     public function list(){
-        $filters = \request()->only(['categoryP','categoryC','locationP','locationC']);
-        $query = Announcement::with('location_child:id,name_tm,name_ru')
-            ->with('category2:id,name_tm,name_ru')
-            ->select(['title','images','price','locationC','categoryC','created_at'])
+        $filters = \request()->only(['categoryP','categoryC','locationP']);
+        $query = Announcement::with('location:id,name_tm,name_ru')
+            ->with('subCategory:id,name_tm,name_ru')
+            ->select(['title','images','price','locationP','categoryC','created_at'])
             ->where('approved',1);
 
-        foreach ($filters as $key=>$filter){
+        foreach ($filters as $key => $filter){
             $query->where($key,$filter);
         }
         //        todo sorting???
@@ -25,8 +25,10 @@ class AnnouncementController extends Controller
     }
 
     public function item($id){
-        return Announcement::with(['location_child:id,name_tm,name_ru','category2:id,name_tm,name_ru'])
-            ->find($id);
+        return Announcement::with([
+            'location:id,name_tm,name_ru',
+            'subCategory:id,name_tm,name_ru'
+        ])->find($id);
     }
 
     public function store(AnnouncementRequest $request){
@@ -38,7 +40,7 @@ class AnnouncementController extends Controller
                 'client_id' => auth()->id(),
                 'price' => $request['price'],
                 'locationP' => $request['locationP'],
-                'locationC' => $request['locationC'],
+//                'locationC' => $request['locationC'],
                 'phone' => auth()->user()->phone,
                 'email' => auth()->user()->email,
                 'categoryP' => $request['categoryP'],
